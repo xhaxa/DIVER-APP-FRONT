@@ -2,7 +2,6 @@
   <v-card
     class="mx-auto ma-5"
     max-width="100%"
-    
   >
     <!-- <v-img
       class="white--text align-end"

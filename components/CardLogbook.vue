@@ -1,11 +1,12 @@
 <template>
-  <v-card
-    class="ma-8"
-    max-width="100%"
-    color="primary"
-  >
-    <v-row> 
-      <v-col>
+<v-row> 
+  <v-col>
+    <v-card
+      class="ma-5"
+      max-width="100%"
+      color="primary"
+    >
+      
         <pre>
           {{ logbook }}
         </pre>
@@ -41,18 +42,18 @@
           </div>
         </v-expand-transition>
 
-      </v-col>
-    </v-row>
-  </v-card>
 
+    </v-card>
+  </v-col>
+</v-row>
 </template>
 
 <script>
   export default {
     name: "CardLogbook",
-    props: {
-      logbook: Object,
-    },
+    // props: {
+    //   logbook: Object,
+    // },
     data() {
       return {
         show: false,

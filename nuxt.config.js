@@ -106,7 +106,6 @@ export default {
           primary: "00E2D9",
           secondary: "BE66F5",
           darken: "212121",
-          gradient: "linear-gradient(90deg, rgba(190,102,245,1) 0%, rgba(0,226,217,1) 100%)",
           accent: colors.shades.black,
           error: colors.red.accent3,
         },
