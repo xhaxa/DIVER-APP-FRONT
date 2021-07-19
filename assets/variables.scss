@@ -8,5 +8,6 @@
 $body-font-family: 'Lato';
 $heading-font-family: 'Lato';
 $font-size-root: 15px;
+$gradient: linear-gradient(to right, blue, white);
 
 @import '~vuetify/src/styles/styles.sass';

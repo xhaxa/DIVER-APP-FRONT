@@ -1,58 +1,111 @@
 <template>
   <v-row >
-    <v-col class="text-center" >
-    <div class="position-relative">
-      <v-img
-        lazy-src="/dashboardUser.png"
-        max-height="100%"
-        max-width="100%"
-        src="/dashboardUser.png"
-      ></v-img> 
-      <div class="position-absolute ml-6">
-        <h2 class=" white--text" > Sara´ Users  </h2>  
+    <v-col 12 class="text-center" >
+      <div class="position-relative">
+        <v-carousel 
+          cycle
+          height="250"
+          :show-arrows="false"
+          hide-delimiters
+        >
+          <v-carousel-item
+            v-for="(item,i) in items"
+            :key="i"
+            :src="item.src"
+            reverse-transition="fade-transition"
+            transition="fade-transition"
+          ></v-carousel-item>
+        </v-carousel>  
       </div>
-    </div>
-    <!-- <CardApis v-for="(image, idx) in images" :key="idx" :imagesProp="image.src" class="mt-5"/> -->
-    <div class="mx-5"> 
-      <CardApis class="mt-5"/>
-      <CardApis class="mt-5"/>
-    </div>
+
+      <div class="mx-5 py-12"> 
+        <h2 class="text-left" > Users { name } </h2>  
+        <v-divider></v-divider>
+        <CardApis v-for="(image, idx) in images" :key="idx" :prop="image" class="mt-5" @click.native="goLogbook(image.to)"/>
+        <CardApis class="mt-5" @click.native="goConsole"/>
+    
+      </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
   export default {
-
-    methods: {
-    goLogbook () {
-      this.$router.push('/logbook')  
-    },
     data() {
       return {
+        name: "",
         images: [
-          {
+          { 
+            to: "/logbook",
             src: "/avatar.png",
             title: "Logbook"
           },
-          {
+          { 
+            to: "/puntosinmersion",
             src: "/inmersion.png",
             title: "Puntos de inmersión"
           },
-          {
+          { 
+            to: "/tablademareas",
             src: "/mareas.png",
             title: "Tabla de mareas"
           },
           {
+            to: "/prediccionmetereologica",
             src: "/metereologica.png",
             title: "Predicción metereológica"
           }
-        ]
+        ],
+        items: [
+          {
+            src: "/carousel1.png",
+          },
+          {
+            src: "/carousel2.png",
+          },
+          {
+            src: "/carousel3.png",
+          },
+          {
+            src: "/carousel4.png",
+          },
+          {
+            src: "/carousel5.png",
+          },
+           {
+            src: "/carousel6.png",
+          },
+           {
+            src: "/carousel7.png",
+          },
+           {
+            src: "/carousel8.png",
+          },
+           {
+            src: "/carousel9.png",
+          },
+           {
+            src: "/carousel10.png",
+          }
+        ],
       }
     },
-},
-  
-}
+    mounted() {
+      this.$root.$on("messageFromUserName", (name) => {
+        this.name = name
+        console.log("nombre" + name)
+      })
+    },
+    methods: {
+      goLogbook (toParams) {
+        console.log("holaaaa");
+        this.$router.push(toParams)  
+      },      
+      goConsole () {
+        console.log("si entra")
+      }
+    }
+  }
 </script>
 
 <style >
@@ -64,11 +117,8 @@
 .position-absolute {
   position: absolute;
   top: 90%;
-  left: 20%;
+  left: 10%;
   transform: translate(-50%, -50%);
 }
 
-.text-black{
-  color: black
-}
 </style>

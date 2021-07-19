@@ -1,19 +1,13 @@
 <template>
   <v-card
-    class="mx-auto ma-5"
     max-width="100%"
   >
-    <!-- <v-img
+    <v-img
       class="white--text align-end"
       height="80px"
-      :src="imagesProp.src || '/avatar.png'"
-    > -->
-      <v-img
-        class="white--text align-end"
-        height="80px"
-        src="/avatar.png"
-      >
-    <v-card-title>Logbook</v-card-title>
+      :src="prop.src"
+    >   
+    <v-card-title class="shadow">{{ prop.title }}</v-card-title>
     </v-img>  
   </v-card>
 
@@ -22,9 +16,14 @@
 <script>
   export default {
     name: "CardApis",
-    // props: {
-    //   imagesProp: Object,
-    // },
+    props: {
+      prop: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
+    },
     data() {
       return {
         
@@ -32,3 +31,10 @@
     },
   }
 </script>
+
+<style >
+.shadow {
+  text-shadow: black 0.1em 0.1em 0.3em
+}
+
+</style>

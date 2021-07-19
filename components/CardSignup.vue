@@ -19,7 +19,7 @@
                         name="Email"
                         prepend-icon="email"
                         type="text"
-                        color="teal accent-3"
+                        color="primary"
                       />
 
                       <v-text-field
@@ -29,7 +29,7 @@
                         name="password"
                         :type="showPassword ? 'text' : 'Password'"
                         prepend-icon="lock"
-                        color="teal accent-3"
+                        color="primary"
                         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword = !showPassword"  
                       />
                       <p v-if="error" class="error">Has introducido mal el email o la contraseña.</p>
@@ -80,7 +80,7 @@
                         name="Name"
                         prepend-icon="person"
                         type="text"
-                        color="teal accent-3"
+                        color="primary"
                       />
                       <v-text-field
                         v-model="email"
@@ -88,7 +88,7 @@
                         name="Email"
                         prepend-icon="email"
                         type="text"
-                        color="teal accent-3"
+                        color="primary"
                       />
 
                       <v-text-field
@@ -97,7 +97,7 @@
                         label="Password"
                         name="password"
                         :type="showPassword ? 'text' : 'Password'" 
-                        color="teal accent-3"
+                        color="primary"
                         prepend-icon="mdi-lock" 
                         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword = !showPassword" 
                         
@@ -136,13 +136,20 @@ export default {
     signUp(){
       UsersServices.signUp(this.name, this.email, this.pwd)
         .then((res) => {
-          localStorage.setItem("token", res.token)// antes lo tenía puesto en res.token y por eso debía de fallar(RES.DATA.TOKEN)
+          localStorage.setItem("token", res.token)
           console.log("hola signUP");
           console.log(res.email);
-          this.$router.push("/users/me")
+          this.$router.push("/users/me") // no me redirije...
           })
         .catch((err) => console.log(`ERROR SIGNUP ${err}`))
     },
+
+    
+    sendNameUser() {
+      this.$root.$emit("messageFromUserName", this.name)
+    },
+
+
     /* ESTO SERÍA LO MISMO QUE ARRIBA
     async signUp(){
       try {

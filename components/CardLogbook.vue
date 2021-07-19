@@ -1,51 +1,47 @@
 <template>
-<v-row> 
-  <v-col>
-    <v-card
-      class="ma-5"
-      max-width="100%"
-      color="primary"
+  <v-card
+    max-width="100%"
+    color="primary"
+    dark
+  >
+    <v-img
+      gradient="90deg, rgba(190,102,245,1) 0%, rgba(0,226,217,1) 100%"
     >
-      
-        <pre>
-          {{ logbook }}
-        </pre>
-      <!-- <v-img
-        class="white--text align-end"
-        height="80px"
-        :src="imagesProp.src || '/avatar.png'"
-      > 
-      </v-img>  -->
-
+    <!-- <pre>  
+      {{ logbook }}
+    </pre> -->
+      <v-card-actions> 
         <v-card-title>Inmersión </v-card-title>
-        
-  
-        <v-card-actions class="">
-          <v-card-subtitle>30 metros</v-card-subtitle>
-          <v-card-subtitle>45 minutos</v-card-subtitle>
-          <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
+         
+        <v-icon class="mr-1"
+        @click="deleteDive"
 
-          <v-btn
-            icon
-            @click="show = !show"
-          >
-            <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-          </v-btn>
-        </v-card-actions>
-        <v-expand-transition>
-          <div v-show="show">
-            <v-divider></v-divider>
+        >{{ 'mdi-delete-alert-outline' }}</v-icon>
+          
+      </v-card-actions>
+      <v-card-actions >
+        <v-card-subtitle>30 metros</v-card-subtitle>
+        <v-card-subtitle>45 minutos</v-card-subtitle>
+        <v-spacer></v-spacer>
+        <v-btn
+          icon
+          @click="show = !show"
+        >
+          <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+        </v-btn>
+      </v-card-actions>
+      <v-expand-transition>
+        <div v-show="show">
+          <v-divider></v-divider>
 
-            <v-card-text>
-              I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be 
-            </v-card-text>
-          </div>
-        </v-expand-transition>
-
-
-    </v-card>
-  </v-col>
-</v-row>
+          <v-card-text>
+            I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be 
+          </v-card-text>
+        </div>
+      </v-expand-transition>
+    </v-img>
+  </v-card>
 </template>
 
 <script>
@@ -59,5 +55,13 @@
         show: false,
       }
     },
+    methods: {
+      deleteDive () {
+        alert('Estas seguro de borrar esta inmersión?')
+      },
+    },
   }
 </script>
+
+
+
