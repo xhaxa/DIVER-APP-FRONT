@@ -6,15 +6,9 @@ const api = axios.create({
 
 export default {
   async signUp (name, email, pwd) {
-    try {
-      const body = {name, email, pwd}
-
-      // Esto es lo mismo que {name: name, email: email, pwd: pwd} le indicamos lo que espera recibir el back (API)
-      const response = await api.post('/auth/signup', body);
-      return response.data;
-    } catch (err) {
-      console.error(err);
-    }
+    // Esto es lo mismo que {name: name, email: email, pwd: pwd} le indicamos lo que espera recibir el back (API)
+    const response = await api.post('/auth/signup', {name, email, pwd});
+    return response.data;
   },
 
   async getLogbooks(){

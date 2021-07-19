@@ -13,7 +13,7 @@ export default {
     ],
     link: [
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap' }
-    ] 
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -63,7 +63,8 @@ export default {
           global: true
         },
         user: {
-          property: "user"
+          propertyName: "user",
+          autoFetch: false
         },
         endpoints: {
           login: { url: "/auth/login", method: "post" },
@@ -85,7 +86,7 @@ export default {
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
-  vuetify: { 
+  vuetify: {
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
     // defaultAssets: false,

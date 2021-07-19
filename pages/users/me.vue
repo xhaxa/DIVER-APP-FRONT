@@ -2,7 +2,7 @@
   <v-row >
     <v-col 12 class="text-center" >
       <div class="position-relative">
-        <v-carousel 
+        <v-carousel
           cycle
           height="250"
           :show-arrows="false"
@@ -15,15 +15,13 @@
             reverse-transition="fade-transition"
             transition="fade-transition"
           ></v-carousel-item>
-        </v-carousel>  
+        </v-carousel>
       </div>
 
-      <div class="mx-5 py-12"> 
-        <h2 class="text-left" > Users { name } </h2>  
+      <div class="mx-5 py-12">
+        <h2 class="text-left" > Users {{ name }} </h2>
         <v-divider></v-divider>
         <CardApis v-for="(image, idx) in images" :key="idx" :prop="image" class="mt-5" @click.native="goLogbook(image.to)"/>
-        <CardApis class="mt-5" @click.native="goConsole"/>
-    
       </div>
     </v-col>
   </v-row>
@@ -33,19 +31,19 @@
   export default {
     data() {
       return {
-        name: "",
+        name: null,
         images: [
-          { 
+          {
             to: "/logbook",
             src: "/avatar.png",
             title: "Logbook"
           },
-          { 
+          {
             to: "/puntosinmersion",
             src: "/inmersion.png",
             title: "Puntos de inmersión"
           },
-          { 
+          {
             to: "/tablademareas",
             src: "/mareas.png",
             title: "Tabla de mareas"
@@ -91,25 +89,19 @@
       }
     },
     mounted() {
-      this.$root.$on("messageFromUserName", (name) => {
-        this.name = name
-        console.log("nombre" + name)
-      })
+      console.log('this.$auth.user')
+      this.name = JSON.parse(localStorage.getItem('user')).name
     },
     methods: {
       goLogbook (toParams) {
         console.log("holaaaa");
-        this.$router.push(toParams)  
-      },      
-      goConsole () {
-        console.log("si entra")
+        this.$router.push(toParams)
       }
     }
   }
 </script>
 
 <style >
-
 .position-relative {
   position: relative;
 }
