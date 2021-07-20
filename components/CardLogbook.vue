@@ -7,11 +7,11 @@
     <v-img
       gradient="90deg, rgba(190,102,245,1) 0%, rgba(0,226,217,1) 100%"
     >
-    <!-- <pre>  
-      {{ logbook }}
-    </pre> -->
+     <pre>  
+      {{ divelog }}
+    </pre> 
       <v-card-actions> 
-        <v-card-title>Inmersión </v-card-title>
+        <v-card-title>Inmersión {{ divelog.spot }} </v-card-title>
         <v-spacer></v-spacer>
          
         <v-icon class="mr-1"
@@ -47,9 +47,14 @@
 <script>
   export default {
     name: "CardLogbook",
-    // props: {
-    //   logbook: Object,
-    // },
+    props: {
+      divelog: {
+        type: Object,
+        default() {
+          return {}
+        }
+      } 
+    },
     data() {
       return {
         show: false,

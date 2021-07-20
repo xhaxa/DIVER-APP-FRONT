@@ -39,11 +39,8 @@
       <v-divider>
       </v-divider>
       <CardLogbook class="mt-5" />
-      <CardLogbook class="mt-5" />
-      <CardLogbook class="mt-5" />
-      <CardLogbook class="mt-5" />
-      <CardLogbook class="mt-5" />
-      <!-- <CardLogbook v-for="(logbook,idx) in logbooks" :key="idx" :logbook="logbook" /> -->
+
+      <CardLogbook v-for="(divelog,idx) in divelogs" :key="idx" :divelog="divelog" />
     </div>
       
 
@@ -52,15 +49,23 @@
 </template>
 
 <script>
- /* import {getLogbooks} from '~/services/UsersServices' */
+  import UsersServices from '~/services/UsersServices' 
 
   export default {
-    // layout: "logbook",
-    
-    // async asyncData() {
-    //   const logbooks = await getLogbooks()
-    //   return { logbooks }
-    // }
+    async asyncData() {
+      try {
+        const divelogs = await UsersServices.getDivelog()
+        console.log("no se ");
+        return { divelogs }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // data() {
+    //   return {
+    //     divelogs: {}
+    //   }
+    // },   
     methods: {
       goNewDive () {
       this.$router.push('/newdive')  

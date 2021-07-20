@@ -11,8 +11,8 @@ export default {
     return response.data;
   },
 
-  async getLogbooks(){
-    const response = await api.get('/logbooks')
+  async getDivelog(){
+    const response = await api.get('/users/me/divelog')
     return response.data
   }
 }

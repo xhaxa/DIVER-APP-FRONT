@@ -57,6 +57,13 @@
                   dense
                   prepend-icon="mdi-map-marker"
                 ></v-text-field>
+                <mapbox-map id="map"
+                  style="margin-top: 1em; height: 400px;"
+                  access-token="pk.eyJ1IjoieGhheGEiLCJhIjoiY2txdGNobGV5MDZtcjJ1cDhqM2J5eWMwbiJ9.p_dcnkD8_93K9J5C-Jf6Zg"
+                  map-style="mapbox://styles/mapbox/streets-v11">
+                  <mapbox-geocoder />
+                </mapbox-map>
+
               </v-col>
 
               <v-col
@@ -111,23 +118,43 @@
 </template>
 
 <script>
+
   
  /* import {getLogbooks} from '~/services/UsersServices' */
 
   export default {
-   layout: "logbook",
-    
+    layout: "logbook",
+    data() {
+      return {
+        map: null
+      }
+    },
+    mounted() {
+      //  const mapboxgl = require('mapbox-gl')
+      //  const map = new mapboxgl.Map({
+      //    accessToken: 'pk.eyJ1IjoieGhheGEiLCJhIjoiY2txdGNobGV5MDZtcjJ1cDhqM2J5eWMwbiJ9.p_dcnkD8_93K9J5C-Jf6Zg',
+      //    container: 'map', // <div id="map"></div>
+      //    style: 'mapbox://styles/mapbox/streets-v9',
+      //    center: [-21.9270884, 64.1436456],
+      //    zoom: 13
+      // })
+    }
     // async asyncData() {
     //   const logbooks = await getLogbooks()
     //   return { logbooks }
     // }
-  } 
-  
+     
+  }
 
 </script>
 
 <style >
 
+  #map {
+    width: 100%;
+    height: 500px;
+  }
+  
   .position-relative {
     position: relative;
   }
