@@ -1,6 +1,6 @@
 <template>
   <v-row >
-    <v-col 12 class="text-center" >
+    <v-col >
       <div class="position-relative mb-10">
         <v-img
           lazy-src="/logbook.png"
@@ -36,11 +36,8 @@
 
       </div>
       
-      <v-divider>
-      </v-divider>
-      <CardLogbook class="mt-5" />
-
-      <CardLogbook v-for="(divelog,idx) in divelogs" :key="idx" :divelog="divelog" />
+      <v-divider />
+      <CardLogbook v-for="(divelog,idx) in divelogs" :key="idx" :divelog="divelog" /> 
     </div>
       
 
@@ -49,23 +46,20 @@
 </template>
 
 <script>
-  import UsersServices from '~/services/UsersServices' 
 
   export default {
-    async asyncData() {
+    async asyncData({ $axios, $auth }) {
       try {
-        const divelogs = await UsersServices.getDivelog()
-        console.log("no se ");
-        return { divelogs }
+        const {divelog} = await $axios.$get('/users/me', {     
+          headers: {
+            token: $auth.strategy.token.get().slice(7)
+          }
+        })
+        return { divelogs: divelog }
       } catch (error) {
         console.log(error);
       }
     },
-    // data() {
-    //   return {
-    //     divelogs: {}
-    //   }
-    // },   
     methods: {
       goNewDive () {
       this.$router.push('/newdive')  
@@ -94,10 +88,5 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
-  /* h2 {
-    display: inline-block;
-  } */
-
 
 </style>

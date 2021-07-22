@@ -128,8 +128,8 @@ export default {
   data: () => ({
     step: 1,
     showPassword: false,
-    email: "",
-    pwd: "",
+    email: "sara@gmail.com",
+    pwd: "123456",
     name: "",
     error: false
   }),
@@ -138,8 +138,8 @@ export default {
     async signUp(){
       try {
         const res = await UsersServices.signUp(this.name, this.email, this.pwd)
-        localStorage.setItem('user', JSON.stringify(res.user))
-        this.$auth.setUserToken(res.token)
+        await this.$auth.setUserToken(res.token)
+        await this.$auth.setUser(res.user)
       } catch (error) {
         alert('Wrong credentials')
         console.log(error)
@@ -148,7 +148,7 @@ export default {
 
     async login(){
       try {
-        await this.$auth.loginWith(
+        const response = await this.$auth.loginWith(
           'local',
           {
             data: {
@@ -157,6 +157,7 @@ export default {
             }
           }
         )
+        await this.$auth.setUser(response.data.user)
       } catch (error) {
         alert('Wrong credentials')
         console.log(`ERROR LOGIN ${error}`)

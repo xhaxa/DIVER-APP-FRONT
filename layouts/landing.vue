@@ -17,5 +17,6 @@ export default {
 <style>
 .full-height {
   height: 100vh;
+  background-color: #212121;
 }
 </style>

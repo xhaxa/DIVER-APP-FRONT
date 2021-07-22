@@ -3,26 +3,26 @@
     max-width="100%"
     color="primary"
     dark
+    class="mt-5"
   >
     <v-img
       gradient="90deg, rgba(190,102,245,1) 0%, rgba(0,226,217,1) 100%"
     >
-     <pre>  
+     <!-- <pre>  
       {{ divelog }}
-    </pre> 
+    </pre>  -->
       <v-card-actions> 
         <v-card-title>Inmersión {{ divelog.spot }} </v-card-title>
-        <v-spacer></v-spacer>
+        <v-spacer />
          
         <v-icon class="mr-1"
         @click="deleteDive"
-
         >{{ 'mdi-delete-alert-outline' }}</v-icon>
           
       </v-card-actions>
       <v-card-actions >
-        <v-card-subtitle>30 metros</v-card-subtitle>
-        <v-card-subtitle>45 minutos</v-card-subtitle>
+        <v-card-subtitle>{{ divelog.depth }} metros</v-card-subtitle>
+        <v-card-subtitle>{{ divelog.duration }} minutos</v-card-subtitle>
         <v-spacer></v-spacer>
         <v-btn
           icon
@@ -31,13 +31,33 @@
           <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
         </v-btn>
       </v-card-actions>
-      <v-expand-transition>
-        <div v-show="show">
+      <v-expand-transition >
+        <div  v-show="show" class="text-left ">
           <v-divider></v-divider>
-
-          <v-card-text>
-            I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be 
-          </v-card-text>
+            <!-- <v-card-subtitle>Fecha: {{ divelog.date }} </v-card-subtitle> -->
+          <v-card-title class="ml-2 text-decoration-underline">Información detallada </v-card-title>
+          <v-card-actions>
+            <v-card-text >
+            Fecha: {{ divelog.date }} <br> Hora de entrada: {{ divelog.time }}
+            </v-card-text>  
+            <v-spacer />
+            <v-card-text>
+            Presión inicial: {{ divelog.bottle.initialPressure }} bares <br> Presión final: {{ divelog.bottle.finalPressure }} bares
+            </v-card-text>
+          </v-card-actions>
+            
+          
+          <v-card-actions>
+            <v-card-text>
+            Equipo  
+            <v-spacer />
+            Traje:  {{ divelog.equipment.wetsuit }} <br> Grosor: {{ divelog.equipment.thick }} mm <br> Lastre: {{ divelog.equipment.kg }} kg <br> Otros: {{ divelog.equipment.other }}
+            </v-card-text>
+            <v-card-text>
+            Temperatura Superficie: {{ divelog.weather.surfaceTemperature }} ºC <br>
+            Temperatura Agua: {{ divelog.weather.waterTemperature }} º C <br> Clima: {{ divelog.weather.clime }} <br> Visibilidad:  {{ divelog.weather.visibility }}
+            </v-card-text>
+          </v-card-actions>
         </div>
       </v-expand-transition>
     </v-img>

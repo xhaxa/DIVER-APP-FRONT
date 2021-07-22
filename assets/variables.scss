@@ -7,7 +7,18 @@
 
 $body-font-family: 'Lato';
 $heading-font-family: 'Lato';
-$font-size-root: 15px;
+$btn-font-weight: 700;
+$font-size-root: 1.2em;
+// $headings: (
+//   'h1': (
+//     'size': 3.3125em,
+//     'line-height': 1.15em
+//   ),
+//   'h2': (
+//     'size': 2.25em,
+//     'line-height': 1.5em
+//   )
+// );
 $gradient: linear-gradient(to right, blue, white);
 
 @import '~vuetify/src/styles/styles.sass';

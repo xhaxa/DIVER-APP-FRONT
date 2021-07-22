@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center" class="full-height background-cover" >
     <v-col cols="12">
-      <h1 class="text-center white--text app-title">DIVER APP</h1>
+      <h1 class="text-center white--text app-title">DIVER LOG</h1>
       <p class="text-center white--text">No vuelvas a perder ninguna inmersión</p>
       <p class="text-center mt-10">
         <v-btn class="mx-auto" color="warning" elevation="2" @click.native="goLogin"> ENTRAR</v-btn>

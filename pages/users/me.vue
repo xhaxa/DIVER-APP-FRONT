@@ -1,6 +1,6 @@
 <template>
   <v-row >
-    <v-col 12 class="text-center" >
+    <v-col cols="12" class="text-center" >
       <div class="position-relative">
         <v-carousel
           cycle
@@ -19,7 +19,7 @@
       </div>
 
       <div class="mx-5 py-12">
-        <h2 class="text-left" > Users {{ name }} </h2>
+        <h2 class="text-left" > Bienvenido a tu Dive-App {{ user.name }} </h2>
         <v-divider></v-divider>
         <CardApis v-for="(image, idx) in images" :key="idx" :prop="image" class="mt-5" @click.native="goLogbook(image.to)"/>
       </div>
@@ -31,7 +31,7 @@
   export default {
     data() {
       return {
-        name: null,
+        user: this.$auth.user,
         images: [
           {
             to: "/logbook",
@@ -87,10 +87,6 @@
           }
         ],
       }
-    },
-    mounted() {
-      console.log('this.$auth.user')
-      this.name = JSON.parse(localStorage.getItem('user')).name
     },
     methods: {
       goLogbook (toParams) {

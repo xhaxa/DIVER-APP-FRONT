@@ -1,6 +1,6 @@
 <template>
   <v-row >
-    <v-col 12 class="text-center" >
+    <v-col cols="12" class="text-center" >
 
       <div class="pt-16 my-15"> 
         <h1>BITÁCORA</h1>
@@ -15,9 +15,36 @@
 
               <v-col
                 cols="12" 
-              sm="5"
+                sm="5"
               >
-                <v-text-field
+                <v-menu
+                  v-model="menufecha"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="Fecha"
+                      required
+                      filled
+                      clearable
+                      dense
+                      prepend-icon="mdi-calendar-blank"
+                      
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="date"
+                    @input="menufecha = false"
+                  ></v-date-picker>
+                </v-menu>
+                <!-- <v-text-field
 
                   label="Fecha"
                   required
@@ -25,16 +52,48 @@
                   clearable
                   dense
                   prepend-icon="mdi-calendar-blank"
-                ></v-text-field>
+                ></v-text-field> -->
 
               </v-col>
               
               <v-col
                 cols="12" 
-                md="5"
+                sm="5"
                 class="ml-auto"
               >
-                <v-text-field
+                <v-menu
+                  ref="menu"
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="time"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="time"
+                      label="Hora entrada"
+                      required
+                      filled
+                      clearable
+                      prepend-icon="mdi-clock-outline"
+                      dense
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="menu2"
+                    v-model="time"
+                    full-width
+                    format="24h"
+                    @click:minute="$refs.menu.save(time)"
+                  ></v-time-picker>
+                </v-menu>
+                <!-- <v-text-field
 
                   label="Hora entrada"
                   required
@@ -42,7 +101,8 @@
                   clearable
                   dense
                   prepend-icon="mdi-clock-outline"
-                ></v-text-field>
+                >
+                </v-text-field> -->
               </v-col>
               <v-col
                 cols="12"
@@ -57,12 +117,12 @@
                   dense
                   prepend-icon="mdi-map-marker"
                 ></v-text-field>
-                <mapbox-map id="map"
+                <!-- <mapbox-map id="map"
                   style="margin-top: 1em; height: 400px;"
                   access-token="pk.eyJ1IjoieGhheGEiLCJhIjoiY2txdGNobGV5MDZtcjJ1cDhqM2J5eWMwbiJ9.p_dcnkD8_93K9J5C-Jf6Zg"
                   map-style="mapbox://styles/mapbox/streets-v11">
                   <mapbox-geocoder />
-                </mapbox-map>
+                </mapbox-map> -->
 
               </v-col>
 
@@ -102,9 +162,9 @@
 
 
 
-        <CardSquare title="Equipo" color="primary"/>
-        <CardSquare title="Botella" color="primary"/>   
-        <CardSquare title="Clima" color="primary"/>  
+        <CardSquare v-for="(item, i) in items"
+          :key="i" :title="item.title" :icon="item" color="primary"/>
+
         <!-- <CardLogbook v-for="(logbook,idx) in logbooks" :key="idx" :logbook="logbook" /> -->
       </div>
         
@@ -126,9 +186,31 @@
     layout: "logbook",
     data() {
       return {
-        map: null
+        map: null,
+        items: [
+          {
+            icon: 'mdi-diving-snorkel',
+            title: 'EQUIPO'
+          },
+          {
+            icon: 'mdi-diving-scuba-tank',
+            title: 'BOTELLA',
+          },
+          {
+            icon: 'mdi-weather-sunny',
+            title: 'CLIMA',
+          },
+        ],
+        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        menu: false,
+        modal: false,
+        menufecha: false,
+        time: null,
+        menu2: false,
+        modal2: false,
       }
     },
+
     mounted() {
       //  const mapboxgl = require('mapbox-gl')
       //  const map = new mapboxgl.Map({

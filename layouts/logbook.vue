@@ -53,7 +53,7 @@
     <v-sheet
       id="scrolling-techniques-5"
       class="overflow-y-auto"
-      max-height="800"
+      max-height="1500"
     >
       
       <v-main >
