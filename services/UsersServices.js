@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api"
+  baseURL: process.env.baseURL
 });
 
 export default {
@@ -20,17 +20,19 @@ export default {
     const response = await api.delete(`/users/me/divelog/${divelog._id}`, divelog)
     return response.data
   },
-/*
+}
+
+/* NO SE HACEN PORQUE CON EL MODULÓ DE AXIOS PARA NUXT NO
   async addDive(divelog){
     const response = await api.post('/users/me/divelog', divelog)
     return response.data
   },
-*/
-  // SOLO SE HA COPIADO , HAY QUE REPASAR
+
+  
   async updateDive(divelog){
     const response = await api.put(`/users/me/divelog/${divelog._id}`, divelog)
     return response.data
   },
 }
-
+*/
 

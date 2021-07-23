@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on }">
       <v-card class="ma-5 d-inline-flex"
-        max-width="500"
+        width="300"
         color="primary"
         dark
         v-on="on"
@@ -10,7 +10,7 @@
         <v-img class="pa-15"
           gradient="90deg, rgba(190,102,245,1) 0%, rgba(0,226,217,1) 100%"
         >
-        <v-card-text>CLIMA </v-card-text>
+        <v-card-text class="text-h5">CLIMA </v-card-text>
         <v-icon x-large> mdi-weather-sunny </v-icon>               
         </v-img>
       </v-card>
@@ -22,7 +22,7 @@
       <v-card-text>
         <v-container grid-list-md>
           <v-layout wrap>
-            <v-flex xs12 sm6 md4>
+            <v-flex xs12 sm5>
               <v-text-field 
               v-model="surfaceTemperature"
               type="number"
@@ -30,8 +30,8 @@
               clearable
               ></v-text-field>
             </v-flex>
-
-            <v-flex xs12 sm6 md4>
+            <v-spacer />
+            <v-flex xs12 sm5>
               <v-text-field 
               v-model="waterTemperature"
               type="number"
@@ -39,24 +39,21 @@
               clearable
               ></v-text-field>
             </v-flex>
-            <v-flex xs12 sm6>
+            <v-flex xs12 sm5>
               <v-select
                 v-model="clime"
-                
                 :items="['Soleado', 'Nublado', 'LLuvioso', 'Noche']"
                 label="Clima"
               ></v-select>
             </v-flex>
-            <v-flex xs12 sm6>
+            <v-spacer />
+            <v-flex xs12 sm5>
               <v-select
                 v-model="visibility"
                 :items="['< 5 metros', '10 metros', '> 15 metros']"
                 label="Visibilidad"
               ></v-select>
             </v-flex>
-
-
-            
           </v-layout>
         </v-container>
         <!-- <small>*indicates required field</small> -->

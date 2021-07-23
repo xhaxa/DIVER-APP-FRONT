@@ -1,15 +1,15 @@
 <template>
   <v-row >
-    <v-col >
+    <v-col cols="12"  class="text-center">
       <div class="position-relative mb-10">
         <v-img
           lazy-src="/logbook.png"
-          height="40vw"
+          height="50%"
           src="/carousel1.png" 
         ></v-img> 
 
-        <v-avatar class="position-absolute-avatar mb-5" mb-5 color="primary" size="21.5vw">
-          <v-avatar size="20vw">
+        <v-avatar class="position-absolute-avatar mb-5" color="primary" size="213" >
+          <v-avatar size="200">
             <img
               src="/avatar.png"
               alt="John"
@@ -17,10 +17,10 @@
           </v-avatar>
         </v-avatar>  
       </div>
-    <div class="py-12 mt-15"> 
-      <div class="pt-15 mt-16 d-flex justify-space-between align-end
+    <div class="mt-16 py-15 mx-5"> 
+      <div class="d-flex justify-space-between align-end
       ">
-        <h2 class="text-left"> Logbook </h2>  
+        <h2 class="text-left"> Logbook </h2>
         <v-btn 
           class="mx-2"
           fab
@@ -28,18 +28,16 @@
           color="primary"
           @click.native="goNewDive"
         >
-          <v-icon dark>
+          <v-icon dark >
             mdi-plus
           </v-icon>
         </v-btn>
-
       </div>
       
       <v-divider />
+      <p class="text-left"> ( {{ totalDive }} ) inmersiones</p>  
       <CardLogbook v-for="(divelog) in divelogs" :key="divelog._id" :divelog="divelog" @deleteLog="deleteLogFront"/> 
     </div>
-      
-
     </v-col>
   </v-row>
 </template>
@@ -64,7 +62,12 @@
   
       }
     },
-    
+    computed: {
+      totalDive() {
+        return this.divelogs.length
+      }
+    }
+    ,
     methods: {
       goNewDive () {
         this.$router.push('/newdive')  

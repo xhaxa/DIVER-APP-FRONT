@@ -33,21 +33,12 @@
       fade-img-on-scroll
       scroll-target="#scrolling-techniques-5"
       scroll-threshold="150"
-    >
-      <!-- <template v-slot:img="{ props }">
-        <v-img
-          v-bind="props"
-          gradient="to top right, rgba(55,236,186,.7), rgba(25,32,72,.7)"
-        ></v-img>
-      </template> -->
-            
+    >           
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title @click="goLogbook" v-text="title" />
-      
-
+  
       <v-spacer></v-spacer>
-      <!-- <v-btn text rounded>Login</v-btn>
-      <v-btn text rounded>Sign Up</v-btn> -->
+     
       <v-btn class="mr-5 mt-2" text dark outlined @click="logout">Salir</v-btn>
     </v-app-bar>
     <v-sheet
@@ -55,17 +46,13 @@
       class="overflow-y-auto"
       max-height="1500"
     >
-      
       <v-main >
         <v-container>
         <Nuxt />
-        
         </v-container>
       </v-main>
     </v-sheet>
 
-
-    
     <v-footer dark
       :absolute="!fixed"
       app

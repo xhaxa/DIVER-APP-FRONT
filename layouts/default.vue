@@ -32,11 +32,7 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title @click="goHome" v-text="title" />
-      
-
       <v-spacer></v-spacer>
-      <!-- <v-btn text rounded>Login</v-btn>
-      <v-btn text rounded>Sign Up</v-btn> -->
       <v-btn class="mr-5" text dark outlined @click="logout">Salir</v-btn>
     </v-app-bar>
 
@@ -89,7 +85,7 @@ export default {
           to: '/prediccionmetereologica'
         },
       ],
-      title: 'DIVER APP'
+      title: 'DIVER LOG'
     }
   },
   methods: {

@@ -6,8 +6,9 @@
       class="white--text align-end"
       height="15vw"
       :src="prop.src"
+      fluid
     >   
-    <v-card-title class="shadow">{{ prop.title }}</v-card-title>
+    <v-card-title  class="shadow text-h6 text-sm-h5 text-md-h4">{{ prop.title }}</v-card-title>
     </v-img>  
   </v-card>
 
@@ -23,12 +24,7 @@
           return {}
         }
       }
-    },
-    data() {
-      return {
-        
-      }
-    },
+    }
   }
 </script>
 

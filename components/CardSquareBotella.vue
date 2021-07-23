@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on }">
       <v-card class="ma-5 d-inline-flex"
-        max-width="500"
+        width="300"
         color="primary"
         dark
         v-on="on"
@@ -10,7 +10,7 @@
         <v-img class="pa-15"
           gradient="90deg, rgba(190,102,245,1) 0%, rgba(0,226,217,1) 100%"
         >
-        <v-card-text>BOTELLA </v-card-text>
+        <v-card-text class="text-h5">BOTELLA </v-card-text>
         <v-icon x-large> mdi-diving-scuba-tank </v-icon>               
         </v-img>
       </v-card>

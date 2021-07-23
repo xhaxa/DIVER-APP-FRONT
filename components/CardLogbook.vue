@@ -14,12 +14,13 @@
       <v-card-actions> 
         <v-card-title>Inmersión {{ divelog.spot }} </v-card-title>
         <v-spacer />
-         
-        <v-icon class="mr-1"
-        @click="deleteDive"
-        >{{ 'mdi-delete-alert-outline' }}</v-icon>
-          
+        <v-icon 
+          class="mr-1"
+          @click="deleteDive"
+        >{{ 'mdi-delete-alert-outline' }}
+        </v-icon>     
       </v-card-actions>
+
       <v-card-actions >
         <v-card-subtitle>{{ divelog.depth }} metros</v-card-subtitle>
         <v-card-subtitle>{{ divelog.duration }} minutos</v-card-subtitle>
@@ -34,7 +35,6 @@
       <v-expand-transition >
         <div  v-show="show" class="text-left ">
           <v-divider></v-divider>
-            <!-- <v-card-subtitle>Fecha: {{ divelog.date }} </v-card-subtitle> -->
           <v-card-title class="ml-2 text-decoration-underline">Información detallada </v-card-title>
           <v-card-actions>
             <v-card-text >
@@ -46,11 +46,8 @@
             </v-card-text>
           </v-card-actions>
             
-          
           <v-card-actions>
             <v-card-text>
-            Equipo  
-            <v-spacer />
             Traje:  {{ divelog.equipment.wetsuit }} <br> Grosor: {{ divelog.equipment.thick }} mm <br> Lastre: {{ divelog.equipment.kg }} kg <br> Otros: {{ divelog.equipment.other }}
             </v-card-text>
             <v-card-text>
@@ -81,9 +78,6 @@
       }
     },
     methods: {
-      // deleteDive () {
-      //   alert('Estas seguro de borrar esta inmersión?')
-      // },
       async deleteDive() {
         try {
           alert('Estas seguro de borrar esta inmersión?')
@@ -99,7 +93,22 @@
           console.log(error);
         }
       },
-      // async
+      // async seeDive() {
+      //   try {
+      //     alert('')
+
+      //     await this.$axios.get(`/users/me/divelog/${this.divelog._id}`, {     
+      //       headers: {
+      //         token: this.$auth.strategy.token.get().slice(7)
+      //       }
+      //     })
+      //     this.$router.push("/newdive" );
+          
+          
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // },
     },
   }
 </script>

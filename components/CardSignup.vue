@@ -120,9 +120,7 @@
 <script>
 import UsersServices from "~/services/UsersServices";
 export default {
-  //   props: {
-  //   source: String
-  // },
+
   data: () => ({
     step: 1,
     showPassword: false,
@@ -149,16 +147,6 @@ export default {
       this.$root.$emit("messageFromUserName", this.name)
     },
 
-
-    /* ESTO SERÍA LO MISMO QUE ARRIBA
-    async signUp(){
-      try {
-        const res = await UsersServices.signUp(this.name, this.email, this.pwd);
-      } catch (err) {
-      console.log(err);
-      }
-    }
-    */
     async login(){
       try {
         await this.$auth.loginWith(
@@ -170,7 +158,6 @@ export default {
             }
           }
         )
-        console.log("hola LOGIN");
       } catch (error) {
         console.log(`ERROR LOGIN ${error}`)
       }

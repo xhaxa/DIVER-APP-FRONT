@@ -1,7 +1,7 @@
 <template>
   <v-row >
     <v-col cols="12" class="text-center" >
-      <div class="position-relative">
+      <div  class="position-relative">
         <v-carousel
           cycle
           height="40vw"
@@ -18,8 +18,8 @@
         </v-carousel>
       </div>
 
-      <div class="mx-5 py-12">
-        <h2 class="text-left" > Bienvenido a tu Dive-App {{ user.name }} </h2>
+      <div class="mx-5 py-15">
+        <h2 class="text-left" > DIVER APP {{ user.name }} </h2>
         <v-divider></v-divider>
         <CardApis v-for="(image, idx) in images" :key="idx" :prop="image" class="mt-5" @click.native="goLogbook(image.to)"/>
       </div>

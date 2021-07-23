@@ -4,12 +4,12 @@
 
       <div class="pt-16 my-15"> 
         <h1>BITÁCORA</h1>
-        <h2 class="text-left mt-2"> Nueva </h2>  
+        <h2 class="text-left mt-15"> Nueva </h2>  
         
         <v-divider>
         </v-divider>
 
-        <v-form  class="mb-4" >
+        <v-form  class="mb-4 mt-8" >
           <v-container>
             <v-row>
 
@@ -29,7 +29,8 @@
                     <v-text-field
                       v-model="dive.date"
                       label="Fecha"
-                      required
+                      :rules="rules" 
+                      hide-details="auto"
                       filled
                       clearable
                       dense
@@ -44,16 +45,6 @@
                     @input="menufecha = false"
                   ></v-date-picker>
                 </v-menu>
-                <!-- <v-text-field
-
-                  label="Fecha"
-                  required
-                  filled
-                  clearable
-                  dense
-                  prepend-icon="mdi-calendar-blank"
-                ></v-text-field> -->
-
               </v-col>
               
               <v-col
@@ -76,7 +67,8 @@
                     <v-text-field
                       v-model="dive.time"
                       label="Hora entrada"
-                      required
+                      :rules="rules" 
+                      hide-details="auto"
                       filled
                       clearable
                       prepend-icon="mdi-clock-outline"
@@ -93,25 +85,16 @@
                     @click:minute="$refs.menu.save(time)"
                   ></v-time-picker>
                 </v-menu>
-                <!-- <v-text-field
-
-                  label="Hora entrada"
-                  required
-                  filled
-                  clearable
-                  dense
-                  prepend-icon="mdi-clock-outline"
-                >
-                </v-text-field> -->
               </v-col>
               <v-col
                 cols="12"
                 md="12"
               >
                 <v-text-field
-                  v-model="spot"
+                  v-model="dive.spot"
                   label="Ubicación"
-                  required
+                  :rules="rules" 
+                  hide-details="auto"
                   filled
                   clearable
                   dense
@@ -132,9 +115,11 @@
               >
                 <v-text-field
 
-                  v-model="duration"
+                  v-model="dive.duration"
+                  type="number"
                   label="Duración inmersión"
-                  required
+                  :rules="rules" 
+                  hide-details="auto"
                   filled
                   clearable
                   dense
@@ -148,9 +133,11 @@
                 class="ml-auto"
               >
                 <v-text-field
-                  v-model="depth"
+                  v-model="dive.depth"
+                  type="number"
                   label="Profundidad"
-                  required
+                  :rules="rules" 
+                  hide-details="auto"
                   filled
                   clearable
                   dense
@@ -160,21 +147,19 @@
             </v-row>
           </v-container>
         </v-form>
-
-        <CardSquareEquipo
-        @sendDataEquip="dataFromEquip" color="primary"/>
-        <CardSquareBotella @sendDataBottle="dataFromBottle" color="primary"/>
-        <CardSquareClima @sendDataClime="dataFromClime" color="primary"/>
-        <!-- <CardSquare v-for="(item, i) in items"
-          :key="i" :title="item.title" :icon="item" color="primary"/> -->
-
-        <!-- <CardLogbook v-for="(logbook,idx) in logbooks" :key="idx" :logbook="logbook" /> -->
+        <v-row class="mt-5" align="center" justify="center">
+          <CardSquareEquipo
+          @sendDataEquip="dataFromEquip" color="primary"/>
+         
+          <CardSquareBotella @sendDataBottle="dataFromBottle" color="primary"/>
+          <CardSquareClima @sendDataClime="dataFromClime" color="primary"/>
+        </v-row>
       </div>
         
       <v-btn class="mb-5"
       color="primary"
       elevation="2"
-      
+      @click="addDive"
       > GUARDAR
       </v-btn>
     </v-col>
@@ -182,14 +167,13 @@
 </template>
 
 <script>
-
-  
-  // import { addDive } from '~/services/UsersServices' 
-
   export default {
     layout: "logbook",
     data() {
       return {
+        rules: [
+          value => !!value || 'Required.',
+        ],
         map: null,
         menu: false,
         modal: false,
@@ -199,15 +183,25 @@
         dive: {
           date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
           time: null,
-          spot: "",
-          duration: "",
-          depth: "",
-          finalPressure: null,
-          initialPressure: null,
-          surfaceTemperature: null,
-          waterTemperature: null,
-          clime: null,
-          visibility: null
+          spot: '',
+          duration: '',
+          depth: '',
+          bottle: {
+            finalPressure: null,
+            initialPressure: null
+          },
+          weather: {
+            surfaceTemperature: null,
+            waterTemperature: null,
+            clime: null,
+            visibility: null
+          },
+          equipment: {
+            wetsuit: null,
+            kg: null,
+            thick: null,
+            other: null
+          }
         }
       }
     },
@@ -215,6 +209,7 @@
       computedDateFormatted () {
         return this.formatDate(this.date)
       },
+      
     },
     watch: {
       date (val) {
@@ -224,51 +219,38 @@
     methods: {
       formatDate (date) {
         if (!date) return null
-
         const [year, month, day] = date.split('-')
         return `${day}/${month}/${year}`
       },
       dataFromBottle(initialPressure, finalPressure) {
-        this.dive.initialPressure = parseInt(initialPressure)
-        this.dive.finalPressure = parseInt(finalPressure)
+        this.dive.bottle.initialPressure = parseInt(initialPressure)
+        this.dive.bottle.finalPressure = parseInt(finalPressure)
       },
       dataFromClime(surfaceTemperature, waterTemperature, clime, visibility ) {
-        this.dive.surfaceTemperature = parseInt(surfaceTemperature)
-        this.dive.waterTemperature = parseInt(waterTemperature)
-        this.dive.clime = clime
-        this.dive.visibility = visibility
+        this.dive.weather.surfaceTemperature = parseInt(surfaceTemperature)
+        this.dive.weather.waterTemperature = parseInt(waterTemperature)
+        this.dive.weather.clime = clime
+        this.dive.weather.visibility = visibility
       },
       dataFromEquip(wetsuit, kg, thick, other ) {
-        this.dive.wetsuit = wetsuit
-        this.dive.kg = parseInt(kg)
-        this.dive.thick = parseInt(thick)
-        this.dive.other = other
+        this.dive.equipment.wetsuit = wetsuit
+        this.dive.equipment.kg = parseInt(kg)
+        this.dive.equipment.thick = parseInt(thick)
+        this.dive.equipment.other = other
       },
-/*
-      async addDive(divelog) {
-        try {
-          const newDive =   
-          await this.$axios.post('/users/me/divelog', {
+      async addDive() {
+        try { 
+          await this.$axios.$post('/users/me/divelog', this.dive, {
             headers: {
-            token: this.$auth.strategy.token.get().slice(7)  
+              token: this.$auth.strategy.token.get().slice(7)  
             }
-          }, divelog)
-          console.log(divelog);
+          })
+
+          this.$router.push("/logbook" );
         } catch (error) {
           console.log(error);
         }
       }
-*/
-// async signUp(){
-//       try {
-//         const res = await UsersServices.signUp(this.name, this.email, this.pwd)
-//         await this.$auth.setUserToken(res.token)
-//         await this.$auth.setUser(res.user)
-//       } catch (error) {
-//         alert('Wrong credentials')
-//         console.log(error)
-//       }
-//     },
 
     // mounted() {
     //   //  const mapboxgl = require('mapbox-gl')
@@ -280,12 +262,6 @@
     //   //    zoom: 13
     //   // })
     // }
-
-
-    // async asyncData() {
-    //   const logbooks = await getLogbooks()
-    //   return { logbooks }
-    // }
      
     }
   }
@@ -293,10 +269,10 @@
 
 <style >
 
-  #map {
+  /* #map {
     width: 100%;
     height: 500px;
-  }
+  } */
   
   .position-relative {
     position: relative;
@@ -314,10 +290,5 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
-  /* h2 {
-    display: inline-block;
-  } */
-
 
 </style>
