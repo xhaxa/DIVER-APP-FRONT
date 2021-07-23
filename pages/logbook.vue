@@ -4,13 +4,12 @@
       <div class="position-relative mb-10">
         <v-img
           lazy-src="/logbook.png"
-          max-height="100%"
-          max-width="100%"
+          height="40vw"
           src="/carousel1.png" 
         ></v-img> 
 
-        <v-avatar class="position-absolute-avatar mb-5" mb-5 color="primary" size="140">
-          <v-avatar size="130">
+        <v-avatar class="position-absolute-avatar mb-5" mb-5 color="primary" size="21.5vw">
+          <v-avatar size="20vw">
             <img
               src="/avatar.png"
               alt="John"
@@ -18,8 +17,8 @@
           </v-avatar>
         </v-avatar>  
       </div>
-    <div class="py-12 mx-5"> 
-      <div class="d-flex justify-space-between align-end
+    <div class="py-12 mt-15"> 
+      <div class="pt-15 mt-16 d-flex justify-space-between align-end
       ">
         <h2 class="text-left"> Logbook </h2>  
         <v-btn 
@@ -37,7 +36,7 @@
       </div>
       
       <v-divider />
-      <CardLogbook v-for="(divelog,idx) in divelogs" :key="idx" :divelog="divelog" /> 
+      <CardLogbook v-for="(divelog) in divelogs" :key="divelog._id" :divelog="divelog" @deleteLog="deleteLogFront"/> 
     </div>
       
 
@@ -50,7 +49,7 @@
   export default {
     async asyncData({ $axios, $auth }) {
       try {
-        const {divelog} = await $axios.$get('/users/me', {     
+        const { divelog } = await $axios.$get('/users/me', {     
           headers: {
             token: $auth.strategy.token.get().slice(7)
           }
@@ -60,11 +59,25 @@
         console.log(error);
       }
     },
+    data () {
+      return {
+  
+      }
+    },
+    
     methods: {
       goNewDive () {
-      this.$router.push('/newdive')  
-    }
-  },
+        this.$router.push('/newdive')  
+      },
+      deleteLogFront (divelogId) {
+      // console.log("holaaa front");
+      // console.log(this.divelogs);
+      // console.log(divelogId);     
+        const index = this.divelogs.findIndex ( item => item._id === divelogId )
+        this.divelogs.splice(index, 1)
+        console.log( index, `index`);
+      }
+    },
   } 
   
 

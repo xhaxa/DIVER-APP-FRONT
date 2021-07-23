@@ -29,6 +29,6 @@ export default {
     background-position-x: center;
   }
   .app-title {
-    font-size: 3em;
+    font-size: 6rem;
   }
 </style>

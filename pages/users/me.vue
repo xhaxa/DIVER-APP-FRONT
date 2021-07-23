@@ -4,7 +4,7 @@
       <div class="position-relative">
         <v-carousel
           cycle
-          height="250"
+          height="40vw"
           :show-arrows="false"
           hide-delimiters
         >

@@ -81,9 +81,25 @@
       }
     },
     methods: {
-      deleteDive () {
-        alert('Estas seguro de borrar esta inmersión?')
+      // deleteDive () {
+      //   alert('Estas seguro de borrar esta inmersión?')
+      // },
+      async deleteDive() {
+        try {
+          alert('Estas seguro de borrar esta inmersión?')
+          
+           await this.$axios.delete(`/users/me/divelog/${this.divelog._id}`, {     
+            headers: {
+            token: this.$auth.strategy.token.get().slice(7)
+            }
+          })
+          this.$emit("deleteLog", this.divelog._id)
+          
+        } catch (error) {
+          console.log(error);
+        }
       },
+      // async
     },
   }
 </script>

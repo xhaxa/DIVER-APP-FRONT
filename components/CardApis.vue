@@ -4,7 +4,7 @@
   >
     <v-img
       class="white--text align-end"
-      height="80px"
+      height="15vw"
       :src="prop.src"
     >   
     <v-card-title class="shadow">{{ prop.title }}</v-card-title>

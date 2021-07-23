@@ -27,7 +27,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="date"
+                      v-model="dive.date"
                       label="Fecha"
                       required
                       filled
@@ -40,7 +40,7 @@
                     ></v-text-field>
                   </template>
                   <v-date-picker
-                    v-model="date"
+                    v-model="dive.date"
                     @input="menufecha = false"
                   ></v-date-picker>
                 </v-menu>
@@ -66,7 +66,7 @@
                   v-model="menu2"
                   :close-on-content-click="false"
                   :nudge-right="40"
-                  :return-value.sync="time"
+                  :return-value.sync="dive.time"
                   transition="scale-transition"
                   offset-y
                   max-width="290px"
@@ -74,7 +74,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="time"
+                      v-model="dive.time"
                       label="Hora entrada"
                       required
                       filled
@@ -89,7 +89,7 @@
                     v-if="menu2"
                     v-model="time"
                     full-width
-                    format="24h"
+                    
                     @click:minute="$refs.menu.save(time)"
                   ></v-time-picker>
                 </v-menu>
@@ -109,7 +109,7 @@
                 md="12"
               >
                 <v-text-field
-
+                  v-model="spot"
                   label="Ubicación"
                   required
                   filled
@@ -132,6 +132,7 @@
               >
                 <v-text-field
 
+                  v-model="duration"
                   label="Duración inmersión"
                   required
                   filled
@@ -147,7 +148,7 @@
                 class="ml-auto"
               >
                 <v-text-field
-
+                  v-model="depth"
                   label="Profundidad"
                   required
                   filled
@@ -160,10 +161,12 @@
           </v-container>
         </v-form>
 
-
-
-        <CardSquare v-for="(item, i) in items"
-          :key="i" :title="item.title" :icon="item" color="primary"/>
+        <CardSquareEquipo
+        @sendDataEquip="dataFromEquip" color="primary"/>
+        <CardSquareBotella @sendDataBottle="dataFromBottle" color="primary"/>
+        <CardSquareClima @sendDataClime="dataFromClime" color="primary"/>
+        <!-- <CardSquare v-for="(item, i) in items"
+          :key="i" :title="item.title" :icon="item" color="primary"/> -->
 
         <!-- <CardLogbook v-for="(logbook,idx) in logbooks" :key="idx" :logbook="logbook" /> -->
       </div>
@@ -171,6 +174,7 @@
       <v-btn class="mb-5"
       color="primary"
       elevation="2"
+      
       > GUARDAR
       </v-btn>
     </v-col>
@@ -180,54 +184,111 @@
 <script>
 
   
- /* import {getLogbooks} from '~/services/UsersServices' */
+  // import { addDive } from '~/services/UsersServices' 
 
   export default {
     layout: "logbook",
     data() {
       return {
         map: null,
-        items: [
-          {
-            icon: 'mdi-diving-snorkel',
-            title: 'EQUIPO'
-          },
-          {
-            icon: 'mdi-diving-scuba-tank',
-            title: 'BOTELLA',
-          },
-          {
-            icon: 'mdi-weather-sunny',
-            title: 'CLIMA',
-          },
-        ],
-        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu: false,
         modal: false,
         menufecha: false,
-        time: null,
         menu2: false,
         modal2: false,
+        dive: {
+          date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+          time: null,
+          spot: "",
+          duration: "",
+          depth: "",
+          finalPressure: null,
+          initialPressure: null,
+          surfaceTemperature: null,
+          waterTemperature: null,
+          clime: null,
+          visibility: null
+        }
       }
     },
+    computed: {
+      computedDateFormatted () {
+        return this.formatDate(this.date)
+      },
+    },
+    watch: {
+      date (val) {
+        this.dateFormatted = this.formatDate(this.date)
+      },
+    },
+    methods: {
+      formatDate (date) {
+        if (!date) return null
 
-    mounted() {
-      //  const mapboxgl = require('mapbox-gl')
-      //  const map = new mapboxgl.Map({
-      //    accessToken: 'pk.eyJ1IjoieGhheGEiLCJhIjoiY2txdGNobGV5MDZtcjJ1cDhqM2J5eWMwbiJ9.p_dcnkD8_93K9J5C-Jf6Zg',
-      //    container: 'map', // <div id="map"></div>
-      //    style: 'mapbox://styles/mapbox/streets-v9',
-      //    center: [-21.9270884, 64.1436456],
-      //    zoom: 13
-      // })
-    }
+        const [year, month, day] = date.split('-')
+        return `${day}/${month}/${year}`
+      },
+      dataFromBottle(initialPressure, finalPressure) {
+        this.dive.initialPressure = parseInt(initialPressure)
+        this.dive.finalPressure = parseInt(finalPressure)
+      },
+      dataFromClime(surfaceTemperature, waterTemperature, clime, visibility ) {
+        this.dive.surfaceTemperature = parseInt(surfaceTemperature)
+        this.dive.waterTemperature = parseInt(waterTemperature)
+        this.dive.clime = clime
+        this.dive.visibility = visibility
+      },
+      dataFromEquip(wetsuit, kg, thick, other ) {
+        this.dive.wetsuit = wetsuit
+        this.dive.kg = parseInt(kg)
+        this.dive.thick = parseInt(thick)
+        this.dive.other = other
+      },
+/*
+      async addDive(divelog) {
+        try {
+          const newDive =   
+          await this.$axios.post('/users/me/divelog', {
+            headers: {
+            token: this.$auth.strategy.token.get().slice(7)  
+            }
+          }, divelog)
+          console.log(divelog);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+*/
+// async signUp(){
+//       try {
+//         const res = await UsersServices.signUp(this.name, this.email, this.pwd)
+//         await this.$auth.setUserToken(res.token)
+//         await this.$auth.setUser(res.user)
+//       } catch (error) {
+//         alert('Wrong credentials')
+//         console.log(error)
+//       }
+//     },
+
+    // mounted() {
+    //   //  const mapboxgl = require('mapbox-gl')
+    //   //  const map = new mapboxgl.Map({
+    //   //    accessToken: 'pk.eyJ1IjoieGhheGEiLCJhIjoiY2txdGNobGV5MDZtcjJ1cDhqM2J5eWMwbiJ9.p_dcnkD8_93K9J5C-Jf6Zg',
+    //   //    container: 'map', // <div id="map"></div>
+    //   //    style: 'mapbox://styles/mapbox/streets-v9',
+    //   //    center: [-21.9270884, 64.1436456],
+    //   //    zoom: 13
+    //   // })
+    // }
+
+
     // async asyncData() {
     //   const logbooks = await getLogbooks()
     //   return { logbooks }
     // }
      
+    }
   }
-
 </script>
 
 <style >
